@@ -7,20 +7,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dbConfig = require('./dbconfig.js');
 const webServerConfig = require('../config/web-server.js');
-const oracledb = require('oracledb');
-const axios = require('axios');
+const mssql = require('mssql');
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Efectuación del consumo del webService remoto sin protocolo TLS
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 // let httpServer;
 let httpsServer;
-
-const URL_GET = webServerConfig.getRoute;
 
 function initialize() {
   return new Promise((resolve, reject) => {
@@ -32,189 +26,107 @@ function initialize() {
       passphrase: 'marval'
     }, app);
 
-    app.post('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
+    app.get('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
 
+      let { VE_Anio, //AÑO
+        VE_Mes //MES
+      } = req.body;
+      if (!VE_Anio ||
+        !VE_Mes) {
+        return res.status(412).json({
+          ok: false,
+          message: 'Se deben enviar VE_Anio y VE_Mes para la consulta'
+        });
+      }
       r1();
 
       async function r1() {
         try {
-
-          let { VE_Anio, //AÑO
-            VE_Mes //MES
-          } = await getAxios();
-
-          if (!VE_Anio ||
-            !VE_Mes) {
-            return res.status(412).json({
-              ok: false,
-              message: 'Se deben enviar año y mes para la consulta'
-            });
-          }
-          // const dataPersist = await getAxios();
-          const RF07CM = 1; //Tipo de Documento
-          const RFGEN4 = RFYQ74PREF.concat(RFVINV) //concatenar facturas   //Factura con prefijo
-          await insert(RF76CTAX, //Nit Empresa Compradora
-            RFYQ74SBTD, //Valor con iva
-            RFYQ74PREF, //Prefijo factura
-            RFYQ74ORD, //Nombre del Proveedor
-            RFYQ74FFAC, //Fecha inicial
-            RFYQ74CIUD, //Ciudad
-            RFVINV, //Factura sin prefijo
-            RFTX2, //Nit Comprador
-            RFMNAM, //Nombre empresa
-            RFEMAL, //Correo del Proveedor
-            RFCRCD, //Moneda COP
-            RFAAG1, //IVA
-            RFAA, //Valor sin iva
-            RF07CM, //Tipo de Documento
-            RFGEN4); //Factura con Prefijo 
+                  
+          var info = await get();  //MES
           return res.status(200).json({
-            ok: false,
-            message: 'Se registraron correctamente los datos',
-            data: [RF76CTAX, //Nit Empresa Compradora
-              RFYQ74SBTD, //Valor con iva
-              RFYQ74PREF, //Prefijo factura
-              RFYQ74ORD, //Nombre del Proveedor
-              RFYQ74FFAC, //Fecha inicial
-              RFYQ74CIUD, //Ciudad
-              RFVINV, //Factura sin prefijo
-              RFTX2, //Nit Comprador
-              RFMNAM, //Nombre empresa
-              RFEMAL, //Correo del Proveedor
-              RFCRCD, //Moneda COP
-              RFAAG1, //IVA
-              RFAA, //Valor sin iva
-              RF07CM, //Tipo de Documento
-              RFGEN4]
+            ok: true,
+            message: 'Se obtuvieron correctamente los datos',
+            data: info
           });
-
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
           return res.status(400).json({
             ok: false,
-            message: 'No se ha podido acceder 1',
-            error: e
+            message: 'No se ha podido acceder al ID y los demás datos de la consulta',
+            error: error
           });
         }
-      }
+     }
 
-      function insert(RF76CTAXPost, //Nit Empresa Compradora
-        RFYQ74SBTDPost, //Valor con iva
-        RFYQ74PREFPost, //Prefijo factura
-        RFYQ74ORDPost, //Nombre del Proveedor
-        RFYQ74FFACPost, //Fecha inicial
-        RFYQ74CIUDPost, //Ciudad
-        RFVINVPost, //Factura sin prefijo
-        RFTX2Post, //Nit Comprador
-        RFMNAMPost, //Nombre empresa
-        RFEMALPost, //Correo del Proveedor
-        RFCRCDPost, //Moneda COP
-        RFAAG1Post, //IVA
-        RFAAPost, //Valor sin iva
-        RF07CMPost, //Tipo de Documento
-        RFGEN4Post ) {
+      function get() {
         return new Promise(async function (resolve, reject) {
+          let connection = new mssql.ConnectionPool(dbConfig);
 
-          let connection;
-          try {
-            connection = await oracledb.getConnection(dbConfig);
-            await connection.execute(
-              `INSERT INTO F554313 (RF76CTAX,
-                RFYQ74SBTD, 
-                RFYQ74PREF, 
-                RFYQ74ORD, 
-                RFYQ74FFAC, 
-                RFYQ74CIUD, 
-                RFVINV, 
-                RFTX2, 
-                RFMNAM,
-                RFEMAL, 
-                RFCRCD, 
-                RFAAG1, 
-                RFAA,
-                RF07CM,
-                RFGEN4) VALUES (:RF76CTAX, 
-                  :RFYQ74SBTD, 
-                  :RFYQ74PREF, 
-                  :RFYQ74ORD, 
-                  :RFYQ74FFAC, 
-                  :RFYQ74CIUD,
-                  :RFVINV,
-                  :RFTX2,
-                  :RFMNAM, 
-                  :RFEMAL,
-                  :RFCRCD, 
-                  :RFAAG1, 
-                  :RFAA,
-                  :RF07CM,
-                  :RFGEN4 )`,
-              [RF76CTAXPost, //Nit Empresa Compradora
-                RFYQ74SBTDPost, //Valor con iva
-                RFYQ74PREFPost, //Prefijo factura
-                RFYQ74ORDPost, //Nombre del Proveedor
-                RFYQ74FFACPost, //Fecha inicial
-                RFYQ74CIUDPost, //Ciudad
-                RFVINVPost, //Factura sin prefijo
-                RFTX2Post, //Nit Comprador
-                RFMNAMPost, //Nombre empresa
-                RFEMALPost, //Correo del Proveedor
-                RFCRCDPost, //Moneda COP
-                RFAAG1Post, //IVA
-                RFAAPost,//Valor sin iva
-                RF07CMPost,//Tipo de Documento
-                RFGEN4Post //Factura con Prefijo 
-              ], { autoCommit: true }
-            );
+          connection.connect().then(function () {
+            var req = new mssql.Request(connection);
+            req.query("SELECT * " +
 
-
-          } catch (err) { // catches errors in getConnection and the query
-            if (err) {
+            // request.query('SELECT VE_Ukid, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal,' +
+            //   'VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry,' +
+            //   'VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet,' +
+            //   'VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones,' +
+            //   'VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente,' +
+            //   'VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad' +
+            "FROM JDEVTAS.BICOMERCIAL " +
+            "WHERE VE_Anio = " + VE_Anio +
+            "AND VE_Mes = " + VE_Mes).then(function (data) {
+              resolve(data);
+              connection.close();
+            })
+            .catch(function (err) {
               console.log(err);
               return res.status(400).json({
                 ok: false,
-                message: 'No se ha podido acceder al ID y los demás datos de la consulta',
+                message: 'No se ha podido conectar con la BD',
                 error: err
               });
-            }
-            //reject(err);
-
-          } finally {
-            if (connection) {   // the connection assignment worked, must release
-              try {
-                await connection.release();
-              } catch (e) {
-                console.error(e);
-                if (e) {
-                  console.log(e);
-                  return res.status(406).json({
-                    ok: false,
-                    message: 'Conection does not release',
-                    error: e
-                  });
-                }
-              }
-            }
-          }
-        });
-      }
-
-      function getAxios() {
-        return new Promise(async function (resolve, reject) {
-          try {
-            let ress = await axios.post(URL_GET)
-            resolve(ress.data);
-          }
-          catch (err) {
-            return res.status(406).json({
-              ok: false,
-              message: 'Error en la conexión con el servicio web remoto',
-              error: err
             });
-            reject(err);
-          }
+
+          })
+          .catch(function (error) {
+            console.log(error);
+            return res.status(400).json({
+              ok: false,
+              message: 'No se ha podido conectar con la BD 22',
+              error: error
+            });
+          });
+
+
+
+          // try {
+          //   connection = mssql.connect(dbConfig)
+          //   let request = new mssql.Request();
+          //   request.query('SELECT *' +
+
+          //     // request.query('SELECT VE_Ukid, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal,' +
+          //     //   'VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry,' +
+          //     //   'VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet,' +
+          //     //   'VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones,' +
+          //     //   'VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente,' +
+          //     //   'VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad' +
+          //     'FROM BICOMERCIAL' +
+          //     'WHERE VE_Anio=' + VE_Anio +
+          //     'AND VE_Mes=' + VE_Mes + ";");
+          //   resolve(request);
+
+          // } catch (error) {
+          //   return res.status(400).json({
+          //     ok: false,
+          //     message: 'No se ha podido conectar con la BD',
+          //     error: err
+          //   });
+          // }
+          // finally {
+          //   mssql.close();
+          // }
         });
       }
-
     });
 
     httpsServer.listen(webServerConfig.port)

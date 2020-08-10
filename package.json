@@ -9,6 +9,7 @@
   "author": "Andrés Carreño",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mssql": "^6.2.1"
   }
 }
