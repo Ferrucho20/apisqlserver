@@ -53,8 +53,7 @@ function initialize() {
       async function r1() {
         try {
 
-          var info = await get(VE_Anio, //AÑO
-            VE_Mes);
+          var info = await get();
           return res.status(200).json({
             ok: true,
             message: 'Se obtuvieron correctamente los datos',
@@ -80,14 +79,13 @@ function initialize() {
       // "FROM JDEVTAS.BICOMERCIAL " +
       // "WHERE VE_Anio = ? " + 
       // " AND VE_Mes = ? "
-      function get(VE_Anio1, //AÑO
-        VE_Mes1) {
+      function get() {
         return new Promise(async function (resolve, reject) {
           let connection = new mssql.ConnectionPool(dbConfig);
           connection.connect().then(function () {
             new mssql.Request(connection)
               .input('VE_Anio1', mssql.Int, VE_Anio)
-              .input('VE_Mes1', mssql.Int, VE_Mes1)
+              .input('VE_Mes1', mssql.Int, VE_Mes)
               .query('SELECT VE_Ukid, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, ' +
                 'VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry,' +
                 'VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet,' +
