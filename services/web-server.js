@@ -1,8 +1,8 @@
 'use strict'
 
 var fs = require('fs');
-var https = require('https');
-//var http = require('http');
+//var https = require('https');
+var http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const dbConfig = require('./dbconfig.js');
