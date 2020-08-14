@@ -13,18 +13,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// let httpServer;
-let httpsServer;
+let httpServer;
+//let httpsServer;
 
 function initialize() {
   return new Promise((resolve, reject) => {
 
-    //httpServer = https.createServer(app);
-    httpsServer = https.createServer({
-      key: fs.readFileSync('./certs/key.pem'),
-      cert: fs.readFileSync('./certs/cert.pem'),
-      passphrase: 'marval'
-    }, app);
+    httpServer = https.createServer(app);
+    // httpsServer = https.createServer({
+    //   key: fs.readFileSync('./certs/key.pem'),
+    //   cert: fs.readFileSync('./certs/cert.pem'),
+    //   passphrase: 'marval'
+    // }, app);
 
     app.get('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
 
@@ -156,7 +156,7 @@ function initialize() {
       }
     });
 
-    httpsServer.listen(webServerConfig.port)
+    httpServer.listen(webServerConfig.port)
       .on('listening', () => {
         console.log(`Web server listening on remote port:${webServerConfig.port}`);
         resolve();
