@@ -19,7 +19,7 @@ let httpServer;
 function initialize() {
   return new Promise((resolve, reject) => {
 
-    httpServer = https.createServer(app);
+    httpServer = http.createServer(app);
     // httpsServer = https.createServer({
     //   key: fs.readFileSync('./certs/key.pem'),
     //   cert: fs.readFileSync('./certs/cert.pem'),
