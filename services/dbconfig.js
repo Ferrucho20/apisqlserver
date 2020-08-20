@@ -13,8 +13,7 @@ module.exports = {
     encrypt: false,
     enableArithAbort: true
   },
-  //server: "172.11.1.41",
-  server: "190.242.129.183",
+  server: "172.11.1.41",
   pool: {
     max: 10,
     min: 0,
