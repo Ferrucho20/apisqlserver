@@ -119,8 +119,7 @@ function initialize() {
               console.log(error);
               return res.status(400).json({
                 ok: false,
-                message: 'No se ha podido conectar con la BD 22',
-                error: error
+                message: 'No se ha podido conectar con la BD 22'
               });
             });
 
