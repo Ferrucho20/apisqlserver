@@ -1,8 +1,8 @@
 'use strict'
 
 var fs = require('fs');
-//var https = require('https');
-var http = require('http');
+var https = require('https');
+//var http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const dbConfig = require('./dbconfig.js');
@@ -19,12 +19,12 @@ let httpServer;
 function initialize() {
   return new Promise((resolve, reject) => {
 
-    httpServer = http.createServer(app);
-    //  httpsServer = https.createServer({
-    //    key: fs.readFileSync('./certs/key.pem'),
-    //    cert: fs.readFileSync('./certs/cert.pem'),
-    //    passphrase: 'marval'
-    //  }, app);
+    //httpServer = http.createServer(app);
+      httpsServer = https.createServer({
+        key: fs.readFileSync('./certs/key.pem'),
+        cert: fs.readFileSync('./certs/cert.pem'),
+        passphrase: 'marval'
+      }, app);
 
     app.get('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
 
@@ -157,7 +157,7 @@ function initialize() {
       }
     });
 
-    httpServer.listen(webServerConfig.port)
+    httpsServer.listen(webServerConfig.port)
       .on('listening', () => {
         console.log(`Web server listening on remote port:${webServerConfig.port}`);
         resolve();
