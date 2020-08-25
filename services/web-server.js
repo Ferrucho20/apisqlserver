@@ -13,8 +13,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let httpServer;
-//let httpsServer;
+//let httpServer;
+let httpsServer;
 
 function initialize() {
   return new Promise((resolve, reject) => {
