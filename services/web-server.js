@@ -31,7 +31,7 @@ function initialize() {
       //var { VE_Anio, //AÑO
       //  VE_Mes //MES
       //} = req.body;
-      var VE_Anio = 2019
+      var VE_Anio = 2020
       var VE_Mes = 7
       if (!VE_Anio ||
         !VE_Mes) {
@@ -93,7 +93,7 @@ function initialize() {
                 'VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet,' +
                 'VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, ' +
                 'VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente,' +
-                'VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad ' +
+                'VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa ' +
                 'FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 ') //AND VE_Mes = @VE_Mes1
               .then(function (data) {   //${parseInt(VE_Mes)}
                 if(data.recordsets[0].length == 0){
