@@ -157,6 +157,87 @@ function initialize() {
       }
     });
 
+    app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
+
+      var CodPry = req.body.CodPry;
+      if (!CodPry) {
+        return res.status(412).json({
+          ok: false,
+          message: 'Se debe enviar un identificador del proyecto para la consulta'
+        });
+      }
+      try {
+        BigInt(CodPry);
+      } catch (error) {
+        return res.status(412).json({
+          ok: false,
+          message: 'Se deben enviar el año y mes en formato numérico'
+        });
+      }
+
+      r1();
+
+      async function r1() {
+        try {
+
+          var info = await get();
+          return res.status(200).json({
+            ok: true,
+            message: 'Se obtuvieron correctamente los datos',
+            rowsAffected: info.rowsAffected[0],
+            dataList: info.recordsets[0]
+          });
+        } catch (error) {
+          return res.status(400).json({
+            ok: false,
+            message: 'No se ha podido acceder al ID y los demás datos de la consulta',
+            error: error
+          });
+        }
+      }
+
+      function get() {
+        return new Promise(async function (resolve, reject) {
+          let connection = new mssql.ConnectionPool(dbConfig);
+          connection.connect().then(function () {
+            new mssql.Request(connection)
+              .input('CodPry1', mssql.Int, CodPry)
+              .query('SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, ' +
+                'EtqFev, EtqVlb, EtqNcl, EtqClr' +
+                'FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1 ') //AND VE_Mes = @VE_Mes1
+              .then(function (data) {   //${parseInt(VE_Mes)}
+                if(data.recordsets[0].length == 0){
+                  return res.status(404).json({
+                    ok: true,
+                    message: 'No se obtuvieron resultados',
+                    dataList: data.recordsets[0],
+                    rowsAffected: data.rowsAffected
+                  });
+                }else{
+                  resolve(data);
+                } 
+                connection.close();
+              })
+              .catch(function (error) {
+                console.log(error);
+                return res.status(400).json({
+                  ok: false,
+                  message: 'No se ha podido realizar la consulta con la BD',
+                  error: error
+                });
+              });
+          })
+            .catch(function (error) {
+              console.log(error);
+              return res.status(400).json({
+                ok: false,
+                message: 'No se ha podido conectar con la BD 22'
+              });
+            });
+
+        });
+      }
+    });
     httpsServer.listen(webServerConfig.port)
       .on('listening', () => {
         console.log(`Web server listening on remote port:${webServerConfig.port}`);
