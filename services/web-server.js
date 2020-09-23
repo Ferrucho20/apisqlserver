@@ -166,14 +166,14 @@ function initialize() {
           message: 'Se debe enviar un identificador del proyecto para la consulta'
         });
       }
-      try {
-        BigInt(CodPry);
-      } catch (error) {
-        return res.status(412).json({
-          ok: false,
-          message: 'Se deben enviar el año y mes en formato numérico'
-        });
-      }
+      //try {
+      //  BigInt(CodPry);
+      //} catch (error) {
+      //  return res.status(412).json({
+      //    ok: false,
+      //    message: 'Se deben enviar el año y mes en formato numérico'
+      //  });
+      //}
 
       r1();
 
@@ -201,11 +201,9 @@ function initialize() {
           let connection = new mssql.ConnectionPool(dbConfig);
           connection.connect().then(function () {
             new mssql.Request(connection)
-              .input('CodPry1', mssql.Int, CodPry)
-              .query('SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, ' +
-                'EtqFev, EtqVlb, EtqNcl, EtqClr' +
-                'FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1 ') //AND VE_Mes = @VE_Mes1
-              .then(function (data) {   //${parseInt(VE_Mes)}
+              //.input('CodPry1', mssql.NChar, CodPry)
+              .query('SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI ') 
+              .then(function (data) {
                 if(data.recordsets[0].length == 0){
                   return res.status(404).json({
                     ok: true,
