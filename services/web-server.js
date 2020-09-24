@@ -19,14 +19,14 @@ let httpsServer;
 function initialize() {
   return new Promise((resolve, reject) => {
 
-    //httpServer = http.createServer(app);
+ /*   //httpServer = http.createServer(app);
       httpsServer = https.createServer({
         key: fs.readFileSync('./certs/key.pem'),
         cert: fs.readFileSync('./certs/cert.pem'),
         passphrase: 'marval'
       }, app);
-
-    app.get('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
+*/
+   /* app.get('/api/sqlserver/JDEVTAS/getByYM', (req, res) => {
 
       //var { VE_Anio, //AÑO
       //  VE_Mes //MES
@@ -236,12 +236,13 @@ function initialize() {
         });
       }
     });
-
+*/
     app.get('/', (req, res) => {
-      res.send('No se ha podido realizar la consulta con la BD')
+      res.send('Hola mundo')
     });
 
-
+    app.listen("10100", () => {console.log("server alive")});
+/*
     httpsServer.listen(webServerConfig.port)
       .on('listening', () => {
         console.log(`Web server listening on remote port:${webServerConfig.port}`);
@@ -250,7 +251,7 @@ function initialize() {
       .on('error', err => {
         reject(err);
       });
-
+*/
   });
 }
 
