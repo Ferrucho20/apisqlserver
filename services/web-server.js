@@ -160,12 +160,12 @@ function initialize() {
     app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
 
       var CodPry = req.headers.CodPry;
-      if (!CodPry) {
-        return res.status(412).json({
-          ok: false,
-          message: 'Se debe enviar un identificador del proyecto para la consulta'
-        });
-      }
+      //if (!CodPry) {
+      //  return res.status(412).json({
+      //    ok: false,
+      //    message: 'Se debe enviar un identificador del proyecto para la consulta'
+      //  });
+      //}
       //try {
       //  BigInt(CodPry);
       //} catch (error) {
