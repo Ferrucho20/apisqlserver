@@ -236,6 +236,12 @@ function initialize() {
         });
       }
     });
+
+    app.get('/', (req, res) => {
+      res.send('No se ha podido realizar la consulta con la BD')
+    });
+
+
     httpsServer.listen(webServerConfig.port)
       .on('listening', () => {
         console.log(`Web server listening on remote port:${webServerConfig.port}`);
