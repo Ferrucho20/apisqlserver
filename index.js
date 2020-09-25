@@ -30,12 +30,12 @@ let httpsServer;
 //  passphrase: 'marval'
 //}, app);
 
-app.get("/", (req, res) => {
+app.get("/", (req,res) => {
   res.send("Hello there");
 });
 
 app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
-
+  
   //var { VE_Anio, //AÑO
   //  VE_Mes //MES
   //} = req.body;
@@ -58,6 +58,9 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
     });
   }
 
+  r1();
+
+  async function r1() {
     try {
 
       var info = await get();
@@ -74,6 +77,7 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
         error: error
       });
     }
+  }
 
   // // var sql = "SELECT * FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio = 2020 AND VE_Mes = 7"
   // var sql = "SELECT VE_Ukid, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
@@ -179,23 +183,27 @@ app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
   //    message: 'Se deben enviar el año y mes en formato numérico'
   //  });
   //}
-  try {
 
-    var info = await get();
-    return res.status(200).json({
-      ok: true,
-      message: 'Se obtuvieron correctamente los datos',
-      rowsAffected: info.rowsAffected[0],
-      dataList: info.recordsets[0]
-    });
-  } catch (error) {
-    return res.status(400).json({
-      ok: false,
-      message: 'No se ha podido acceder al ID y los demás datos de la consulta',
-      error: error
-    });
+  r1();
+
+  async function r1() {
+    try {
+
+      var info = await get();
+      return res.status(200).json({
+        ok: true,
+        message: 'Se obtuvieron correctamente los datos',
+        rowsAffected: info.rowsAffected[0],
+        dataList: info.recordsets[0]
+      });
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        message: 'No se ha podido acceder al ID y los demás datos de la consulta',
+        error: error
+      });
+    }
   }
-
 
   function get() {
     return new Promise(async function (resolve, reject) {
