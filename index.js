@@ -30,9 +30,12 @@ let httpsServer;
 //  passphrase: 'marval'
 //}, app);
 
-app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
+app.get("/", (req,res) => {
   res.send("Hello there");
+});
 
+app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
+  
   //var { VE_Anio, //AÑO
   //  VE_Mes //MES
   //} = req.body;
