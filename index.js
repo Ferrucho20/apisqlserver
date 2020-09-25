@@ -1,17 +1,18 @@
-const webServer = require('./services/web-server.js');
+//import * as fs from "fs";
+import express from "express";
+import bodyParser from "bodyParser";
+import dbConfig from "./services/dbConfig";
+import webServerConfig from "./config/webServerConfig";
+import mssql from "mssql";
 
-async function startup() {
-  console.log('Starting application');
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-  try {
-    console.log('Initializing web server module');
+app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
+  res.send("Hello there");
+});
 
-    await webServer.initialize();
-  } catch (err) {
-    console.error(err);
-
-    process.exit(1); // Non-zero failure code
-  }
-}
-
-startup();
+app.listen("10100", () => {
+  console.log("Server Alive");
+});
