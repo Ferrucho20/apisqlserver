@@ -1,4 +1,4 @@
-const dbConfig = {
+module.exports = {
   authentication: {
     type: 'default',
     options: {
@@ -20,4 +20,4 @@ const dbConfig = {
     idleTimeoutMillis: 100000,
   },
 };
-export default dbConfig;
+// export default dbConfig;
