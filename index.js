@@ -243,6 +243,6 @@ app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
   }
 });
 
-app.listen("10100", () => {
+httpsServer.listen("10100", () => {
   console.log("Server Alive");
 });
