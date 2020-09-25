@@ -1,7 +1,7 @@
 'use strict'
 
-var fs = require('fs');
-var https = require('https');
+//var fs = require('fs');
+//var https = require('https');
 //var http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -24,11 +24,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let httpsServer;
 
 //httpServer = http.createServer(app);
-httpsServer = https.createServer({
-  key: fs.readFileSync('./certs/key.pem'),
-  cert: fs.readFileSync('./certs/cert.pem'),
-  passphrase: 'marval'
-}, app);
+//httpsServer = https.createServer({
+//  key: fs.readFileSync('./certs/key.pem'),
+//  cert: fs.readFileSync('./certs/cert.pem'),
+//  passphrase: 'marval'
+//}, app);
 
 app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
   res.send("Hello there");
@@ -243,6 +243,6 @@ app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
   }
 });
 
-httpsServer.listen("10100", () => {
-  console.log("Server Alive");
+app.listen(webServerConfig.port, () => {
+  console.log(`Web server listening on remote port:${webServerConfig.port}`);
 });
