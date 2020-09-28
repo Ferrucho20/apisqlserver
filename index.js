@@ -168,7 +168,8 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
 
 app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
 
-  var CodPry = req.headers.CodPry;
+  //var CodPry = req.headers.CodPry;
+  var CodPry = "P134567";
   //if (!CodPry) {
   //  return res.status(412).json({
   //    ok: false,
@@ -210,8 +211,8 @@ app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
       let connection = new mssql.ConnectionPool(dbConfig);
       connection.connect().then(function () {
         new mssql.Request(connection)
-          //.input('CodPry1', mssql.NChar, CodPry)
-          .query('SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI ')
+          .input('CodPry1', mssql.NChar, CodPry)
+          .query('SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1')
           .then(function (data) {
             if (data.recordsets[0].length == 0) {
               return res.status(404).json({
