@@ -166,10 +166,10 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
 
 });
 
-app.get('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
+app.post('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
 
   //var CodPry = req.headers.CodPry;
-  var CodPry = "P134567";
+  var CodPry = req.body.CodPry;
   //if (!CodPry) {
   //  return res.status(412).json({
   //    ok: false,
