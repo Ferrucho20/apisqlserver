@@ -96,7 +96,7 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
         new mssql.Request(connection)
           .input('VE_Anio1', mssql.Int, VE_Anio)
           .input('VE_Mes1', mssql.Int, VE_Mes)
-          .query('SELECT VE_Ukid, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, ' +
+          .query('SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, ' +
             'VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry,' +
             'VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet,' +
             'VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, ' +
