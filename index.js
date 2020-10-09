@@ -40,7 +40,7 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
   //  VE_Mes //MES
   //} = req.body;
   var VE_Anio = 2020
-  var VE_Mes = 7
+  var VE_Mes = 9
   if (!VE_Anio ||
     !VE_Mes) {
     return res.status(412).json({
