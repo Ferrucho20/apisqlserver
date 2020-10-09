@@ -102,7 +102,7 @@ app.get("/api/sqlserver/JDEVTAS/getByYM", (req, res) => {
             'VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, ' +
             'VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente,' +
             'VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa ' +
-            'FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 ') //AND VE_Mes = @VE_Mes1
+            'FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 VE_Mes = @VE_Mes1') //AND 
           .then(function (data) {   //${parseInt(VE_Mes)}
             if (data.recordsets[0].length == 0) {
               return res.status(404).json({
@@ -170,12 +170,12 @@ app.post('/api/sqlserver/JDEVTAS/getPlano', (req, res) => {
 
   //var CodPry = req.headers.CodPry;
   var CodPry = req.body.CodPry;
-  if (!CodPry) {
-    return res.status(412).json({
-     ok: false,
-    message: 'Se debe enviar un identificador del proyecto para la consulta'
-     });
-  }
+  //if (!CodPry) {
+  //  return res.status(412).json({
+  //    ok: false,
+  //    message: 'Se debe enviar un identificador del proyecto para la consulta'
+  //  });
+  //}
   //try {
   //  BigInt(CodPry);
   //} catch (error) {
