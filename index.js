@@ -103,7 +103,7 @@ app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
                 "VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet," +
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
-                "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato " +
+                "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra " +
                 "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Mes = @VE_Mes1"
             ) //
             .then(function (data) {
@@ -236,7 +236,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
                 "VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet," +
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
-                "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato " +
+                "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra " +
                 "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1"
             ) //
             .then(function (data) {
