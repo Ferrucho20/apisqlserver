@@ -237,7 +237,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra " +
-                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Transmitir = 'Y'"
+                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Transmitir = 'Y'"
             ) //
             .then(function (data) {
               //${parseInt(VE_Mes)}
