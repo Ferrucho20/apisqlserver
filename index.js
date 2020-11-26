@@ -104,7 +104,7 @@ app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra " +
-                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Mes = @VE_Mes1"
+                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Mes = @VE_Mes1 AND VE_Transmitir = 'Y'"
             ) //
             .then(function (data) {
               //${parseInt(VE_Mes)}
@@ -230,6 +230,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
           new mssql.Request(connection)
             .input("VE_Anio1", mssql.Int, VE_Anio)
             .input("VE_Mes1", mssql.Int, VE_Mes)
+            .input("VE_Transmitir", mssql.String, VE_Mes)
             .query(
               "SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
                 "VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry," +
@@ -237,7 +238,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra " +
-                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1"
+                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Transmitir = 'Y'"
             ) //
             .then(function (data) {
               //${parseInt(VE_Mes)}
