@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //let httpServer;
-let httpsServer;
+//let httpsServer;
 
 //httpServer = http.createServer(app);
 //httpsServer = https.createServer({
@@ -351,6 +351,75 @@ app.post("/api/sqlserver/JDEVTAS/getPlano", (req, res) => {
               "SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1"
             )
             .then(function (data) {
+              if (data.recordsets[0].length == 0) {
+                return res.status(404).json({
+                  ok: true,
+                  message: "No se obtuvieron resultados",
+                  dataList: data.recordsets[0],
+                  rowsAffected: data.rowsAffected,
+                });
+              } else {
+                resolve(data);
+              }
+              connection.close();
+            })
+            .catch(function (error) {
+              console.log(error);
+              return res.status(400).json({
+                ok: false,
+                message: "No se ha podido realizar la consulta con la BD",
+                error: error,
+              });
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+          return res.status(400).json({
+            ok: false,
+            message: "No se ha podido conectar con la BD 22",
+          });
+        });
+    });
+  }
+});
+
+app.get("/api/sqlserver/BICOMERCIAL", (req, res) => {
+  r1();
+  async function r1() {
+    try {
+      var info = await get();
+      return res.status(200).json({
+        ok: true,
+        message: "Se obtuvieron correctamente los datos",
+        rowsAffected: info.rowsAffected[0],
+        dataList: info.recordsets[0],
+      });
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          "No se ha podido acceder al ID y los demás datos de la consulta",
+        error: error,
+      });
+    }
+  }
+  function get() {
+    return new Promise(async function (resolve, reject) {
+      let connection = new mssql.ConnectionPool(dbConfig);
+      connection
+        .connect()
+        .then(function () {
+          new mssql.Request(connection)
+            .query(
+              "SELECT CA_Anio, CA_Mes, CA_Sucursal, CA_CodProyecto, CA_NomProyecto, CA_NroDoc, " +
+                "CA_TipoDoc, CA_TipoSfx, CA_AN8Cliente, CA_NOMCliente, CA_Concepto, CA_FecCompromiso, " +
+                "CA_FecMod, CA_FecPago, CA_FecFactura, CA_VlrPpto, CA_VlRecaudo, CA_VlrSaldo, " +
+                "CA_TipoRecaudo, CA_IDPago, CA_IDCuenta, CA_CtaOBJ, CA_CtaSUB, CA_Compania, " +
+                "CA_NroRecibo, CA_NroFlujo, CA_CuentaCont, CA_CtasVencidas, CA_RangoCartera, CA_DiasVencido, CA_Critico " +
+                "FROM JDEVTAS.BICARTERA WHERE CA_Transmite = 'Y'"
+            )
+            .then(function (data) {
+              //${parseInt(VE_Mes)}
               if (data.recordsets[0].length == 0) {
                 return res.status(404).json({
                   ok: true,
