@@ -383,7 +383,7 @@ app.post("/api/sqlserver/JDEVTAS/getPlano", (req, res) => {
   }
 });
 
-app.get("/api/sqlserver/BICOMERCIAL", (req, res) => {
+app.get("/api/sqlserver/BICARTERA", (req, res) => {
   r1();
   async function r1() {
     try {
