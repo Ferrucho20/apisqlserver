@@ -41,6 +41,23 @@ app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
   var now = new Date();
   var VE_Anio = now.getFullYear();
   var VE_Mes = now.getMonth() + 1;
+
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "Se debe enviar la cabecera de autenticación para la consulta",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "Cabecera de autenticación equivocada",
+    });
+  }
   if (!VE_Anio || !VE_Mes) {
     return res.status(412).json({
       ok: false,
@@ -174,6 +191,23 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
   var now = new Date();
   var VE_Anio = now.getFullYear();
   var VE_Mes = now.getMonth() + 1;
+
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "Se debe enviar la cabecera de autenticación para la consulta",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "Cabecera de autenticación equivocada",
+    });
+  }
   if (!VE_Anio || !VE_Mes) {
     return res.status(412).json({
       ok: false,
@@ -303,6 +337,23 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
 app.post("/api/sqlserver/JDEVTAS/getPlano", (req, res) => {
   //var CodPry = req.headers.CodPry;
   var CodPry = req.body.CodPry;
+
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "Se debe enviar la cabecera de autenticación para la consulta",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "Cabecera de autenticación equivocada",
+    });
+  }
   //if (!CodPry) {
   //  return res.status(412).json({
   //    ok: false,
@@ -384,6 +435,23 @@ app.post("/api/sqlserver/JDEVTAS/getPlano", (req, res) => {
 });
 
 app.get("/api/sqlserver/BICARTERA", (req, res) => {
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "Se debe enviar la cabecera de autenticación para la consulta",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "Cabecera de autenticación equivocada",
+    });
+  }
+
   r1();
   async function r1() {
     try {
