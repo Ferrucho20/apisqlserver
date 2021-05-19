@@ -537,8 +537,8 @@ app.get("api/sqlserver/GESTION", (req, res) => {
       message: "Cabecera de autenticación equivocada",
     });
   }
-  r1();
-  async function r1() {
+  r2();
+  async function r2() {
     try {
       var info = await getData();
       return res.status(200).json({
