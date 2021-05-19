@@ -520,6 +520,88 @@ app.get("/api/sqlserver/BICARTERA", (req, res) => {
   }
 });
 
+app.get("api/sqlserver/GESTION", (req, res) => {
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "Se debe enviar la cabecera de autenticación para la consulta",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "Cabecera de autenticación equivocada",
+    });
+  }
+  r1();
+  async function r1() {
+    try {
+      var info = await getData();
+      return res.status(200).json({
+        ok: true,
+        message: "Se obtuvieron correctamente los datos",
+        rowsAffected: info.rowsAffected[0],
+        dataList: info.recordsets[0],
+      });
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          "No se ha podido acceder a datos de la consulta",
+        error: error,
+      });
+    }
+  }
+  function getData(){
+    return new Promise(async function (resolve, reject) {
+        let connection = new mssql.ConnectionPool(dbConfig);
+        connection
+          .connect()
+          .then(function () {
+            new mssql.Request(connection)
+              .query(
+                "SELECT GE_Filtro,GE_Linea,GE_Cliente,GE_NomCliente,GE_Estado,GE_Cantidad,GE_CodProyecto"+
+                "GE_NomProyecto,GE_Sucursal,GE_NomSucursal,GE_Origen,GE_Asesor,GE_NomAsesor,GE_MesDato"+
+                "GE_Anio,GE_Mes FROM JDEVTAS.GESTION WHERE GE_Transmitir = 'Y'"
+              )
+              .then(function (data) {
+                if (data.recordsets[0].length == 0) {
+                  return res.status(404).json({
+                    ok: true,
+                    message: "No se obtuvieron resultados",
+                    dataList: data.recordsets[0],
+                    rowsAffected: data.rowsAffected,
+                  });
+                } else {
+                  resolve(data);
+                }
+                connection.close();
+              })
+              .catch(function (error) {
+                console.log(error);
+                return res.status(400).json({
+                  ok: false,
+                  message: "No se ha podido realizar la consulta con la BD",
+                  error: error,
+                });
+              });
+          })
+          .catch(function (error) {
+            console.log(error);
+            return res.status(400).json({
+              ok: false,
+              message: "No se ha podido conectar con la BD 22",
+            });
+          });
+      });
+  }
+});
+
+
 app.listen(webServerConfig.port, () => {
   console.log(`Web server listening on remote port:${webServerConfig.port}`);
 });
