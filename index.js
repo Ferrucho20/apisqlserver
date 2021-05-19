@@ -566,7 +566,7 @@ app.get("/api/sqlserver/GESTION", (req, res) => {
         .then(function () {
           new mssql.Request(connection)
             .query(
-              "SELECT GE_Filtro,GE_Linea,GE_Cliente,GE_NomCliente,GE_Estado,GE_Cantidad,GE_CodProyecto,GE_NomProyecto,GE_Sucursal,GE_NomSucursal,GE_Origen,GE_Asesor,GE_NomAsesor,GE_MesDato,GE_Anio,GE_Mes FROM JDEVTAS.GESTION WHERE GE_Transmitir = 'Y' AND GE_Sucursal = 005"  
+              "SELECT GE_Filtro,GE_Linea,GE_Cliente,GE_NomCliente,GE_Estado,GE_Cantidad,GE_CodProyecto,GE_NomProyecto,GE_Sucursal,GE_NomSucursal,GE_Origen,GE_Asesor,GE_NomAsesor,GE_MesDato,GE_Anio,GE_Mes FROM JDEVTAS.GESTION WHERE GE_Transmitir = 'Y'"  
             )
             .then(function (data) {
               if (data.recordsets[0].length == 0) {
