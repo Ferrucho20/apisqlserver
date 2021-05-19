@@ -566,7 +566,13 @@ app.get("/api/sqlserver/GESTION", (req, res) => {
         .then(function () {
           new mssql.Request(connection)
             .query(
-              "SELECT GE_Filtro,GE_Linea,GE_Cliente,GE_NomCliente,GE_Estado,GE_Cantidad,GE_CodProyecto,GE_NomProyecto,GE_Sucursal,GE_NomSucursal,GE_Origen,GE_Asesor,GE_NomAsesor,GE_MesDato,GE_Anio,GE_Mes FROM JDEVTAS.GESTION WHERE GE_Transmitir = 'Y'"  
+              "SELECT CA_Anio, CA_Mes, CA_Sucursal, CA_CodProyecto, CA_NomProyecto, CA_NroDoc, " +
+                "CA_TipoDoc, CA_TipoSfx, CA_AN8Cliente, CA_NOMCliente, CA_Concepto, CA_FecCompromiso, " +
+                "CA_FecMod, CA_FecPago, CA_FecFactura, CA_VlrPpto, CA_VlRecaudo, CA_VlrSaldo, " +
+                "CA_TipoRecaudo, CA_IDPago, CA_IDCuenta, CA_CtaOBJ, CA_CtaSUB, CA_Compania, " +
+                "CA_NroRecibo, CA_NroFlujo, CA_CuentaCont, CA_CtasVencidas, CA_RangoCartera, CA_DiasVencido, CA_Critico " +
+                "FROM JDEVTAS.BICARTERA WHERE CA_Transmite = 'Y'"
+             // "SELECT GE_Filtro,GE_Linea,GE_Cliente,GE_NomCliente,GE_Estado,GE_Cantidad,GE_CodProyecto,GE_NomProyecto,GE_Sucursal,GE_NomSucursal,GE_Origen,GE_Asesor,GE_NomAsesor,GE_MesDato,GE_Anio,GE_Mes FROM JDEVTAS.GESTION WHERE GE_Transmitir = 'Y'"  
             )
             .then(function (data) {
               if (data.recordsets[0].length == 0) {
