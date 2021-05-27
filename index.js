@@ -29,9 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //  cert: fs.readFileSync('./certs/cert.pem'),
 //  passphrase: 'marval'
 //}, app);
-
+//ROOT
 app.get("/", (req, res) => {
-  res.send("Hello there xxxxxxxxx");
+  res.send("Hello WORLD");
 });
 
 app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
