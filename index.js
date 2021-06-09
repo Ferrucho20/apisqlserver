@@ -118,7 +118,7 @@ app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
               "SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
                 "VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry," +
                 "VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet," +
-                "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
+                "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos,VE_VlrDstoFinan, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra, VE_PorcCI, VE_PorcArras, VE_PorcSeparacion, VE_MesesPlazo, VE_NomPlazo,VE_TotInmuebles,VE_TotMts " +
                 "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio >= @VE_Anio1 AND VE_Mes = @VE_Mes1 AND VE_Transmitir = 'Y'"
@@ -268,7 +268,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
               "SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
                 "VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry," +
                 "VE_Inmueble, VE_UndsVtas, VE_UndsRet, VE_UndsOpc, VE_VlrVtas, VE_VlrRet," +
-                "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos, VE_VlrSanciones, VE_VlrSeparaciones, " +
+                "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos,VE_VlrDstoFinan, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra, VE_PorcCI, VE_PorcArras, VE_PorcSeparacion, VE_MesesPlazo, VE_NomPlazo,VE_TotInmuebles,VE_TotMts " +
                 "FROM JDEVTAS.BICOMERCIAL WHERE VE_Transmitir = 'Y'"
