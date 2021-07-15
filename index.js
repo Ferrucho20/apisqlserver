@@ -41,7 +41,7 @@ app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
   var now = new Date();
   var VE_Anio = now.getFullYear();
   //var VE_Mes = now.getMonth() + 1;
-  var VE_Mes = 2;
+  var VE_Mes = "2";
 
   var password = req.headers.pwd;
   if (!password) {
