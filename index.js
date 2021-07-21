@@ -190,7 +190,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
   //} = req.body;
   var now = new Date();
   var VE_Anio = now.getFullYear();
-  //var VE_Mes = now.getMonth() - 5;
+  var VE_Mes = now.getMonth();
 
   var password = req.headers.pwd;
   if (!password) {
@@ -263,7 +263,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
         .then(function () {
           new mssql.Request(connection)
             .input("VE_Anio1", mssql.Int, VE_Anio)
-            //.input("VE_Mes1", mssql.Int, VE_Mes)
+            .input("VE_Mes1", mssql.Int, VE_Mes)
             .query(
               "SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
                 "VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry," +
