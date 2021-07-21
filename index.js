@@ -271,7 +271,9 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos,VE_VlrDstoFinan, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra, VE_PorcCI, VE_PorcArras, VE_PorcSeparacion, VE_MesesPlazo, VE_NomPlazo,VE_TotInmuebles,VE_TotMts,VE_Fec_Escritura,VE_Anio_Escritura,VE_Mes_Escritura,VE_Agrupacion,VE_Cedula,VE_Transmitir,VE_Vlr_RealSancion " +
-                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio in (2018,2019,2020) and VE_Transmitir = 'Y' order by VE_Anio"
+                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio = 2021 and VE_Mes = in (1,2) and VE_Transmitir = 'Y' order by VE_Mes"
+
+                //"FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio in (2018,2019,2020) and VE_Transmitir = 'Y' order by VE_Anio"
             ) //
             .then(function (data) {
               //${parseInt(VE_Mes)}
