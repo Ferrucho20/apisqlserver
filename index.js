@@ -189,7 +189,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
   //  VE_Mes //MES
   //} = req.body;
   var now = new Date();
-  //var VE_Anio = now.getFullYear();
+  var VE_Anio = now.getFullYear();
   //var VE_Mes = now.getMonth() - 5;
 
   var password = req.headers.pwd;
@@ -262,8 +262,8 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
         .connect()
         .then(function () {
           new mssql.Request(connection)
-            //.input("VE_Anio1", mssql.Int, VE_Anio)
-           // .input("VE_Mes1", mssql.Int, VE_Mes)
+            .input("VE_Anio1", mssql.Int, VE_Anio)
+            //.input("VE_Mes1", mssql.Int, VE_Mes)
             .query(
               "SELECT VE_Ukid, VE_Anio, VE_Mes, VE_Tipo, VE_Oper, VE_Sucursal, VE_NomSucursal, " +
                 "VE_CodProyecto, VE_NomProyecto, VE_UndDisponible, VE_FecVtaRet, VE_TipoPry," +
@@ -271,7 +271,7 @@ app.get("/api/sqlserver/JDEVTAS/year", (req, res) => {
                 "VE_VlrOpc, VE_VlrPpto, VE_VlrBnos,VE_VlrDstoFinan, VE_VlrSanciones, VE_VlrSeparaciones, " +
                 "VE_VlrMts, VE_QMts, VE_AN8Asesor, VE_NOMAsesor, VE_AN8Cliente," +
                 "VE_NOMCliente, VE_CodCiudad, VE_NOMCiudad, VE_CodRetiro, VE_DesRetiro, VE_VlrDiasPagSepa, VE_Estrato, VE_NroHNVta, VE_NroHNTra, VE_PorcCI, VE_PorcArras, VE_PorcSeparacion, VE_MesesPlazo, VE_NomPlazo,VE_TotInmuebles,VE_TotMts,VE_Fec_Escritura,VE_Anio_Escritura,VE_Mes_Escritura,VE_Agrupacion,VE_Cedula,VE_Transmitir,VE_Vlr_RealSancion " +
-                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio = 2021 and VE_Mes = in (1,2) and VE_Transmitir = 'Y' order by VE_Mes"
+                "FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio = VE_Anio1 and VE_Mes in (1,2) and VE_Transmitir = 'Y' order by VE_"
 
                 //"FROM JDEVTAS.BICOMERCIAL WHERE VE_Anio in (2018,2019,2020) and VE_Transmitir = 'Y' order by VE_Anio"
             ) //
