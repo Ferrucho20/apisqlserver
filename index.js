@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //}, app);
 
 app.get("/", (req, res) => {
-  res.send("api marval s.a");
+  res.send("welcome to api marval");
 });
 
 app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
