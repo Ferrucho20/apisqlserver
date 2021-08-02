@@ -34,6 +34,89 @@ app.get("/", (req, res) => {
   res.send("api marvall s.a");
 });
 
+app.post("/api/sqlserver/JDEVTAS/getTower", (req, res) => {
+  var CodPry = req.body.CodPry;
+  var password = req.headers.pwd;
+  if (!password) {
+    return res.status(412).json({
+      ok: false,
+      message: "no existe cabecera de autenticación",
+    });
+  }
+  if (
+    password !=
+    "acee589663a018703bb1c4685f55682f3a43426530f5946f9679f97946ca5436"
+  ) {
+    return res.status(412).json({
+      ok: false,
+      message: "error en la autenticación",
+    });
+  }
+
+  confirma();
+  async function confirma() {
+    try {
+      var infor = await getdata();
+      return res.status(200).json({
+        ok: true,
+        message: "se obtuvieron los datos correctamente",
+        rowsAffected: infor.rowsAffected[0],
+        dataList: infor.recordsets[0],
+      });
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        message: "no se ha podido realizar la consulta",
+        error: error,
+      });
+    }
+  }
+
+  function getdata() {
+    return new Promise(async function (resolve, reject) {
+      let connection = new mssql.ConnectionPool(dbConfig);
+      connection
+        .connect()
+        .then(function () {
+          new mssql.Request(connection)
+            .input("CodPry1", mssql.NChar, CodPry)
+            .query(
+              "SELECT CodTorre, CodPlan, DesPlan, TotMts2, TotVend, TodDisp, TotInmuebles FROM JDEVTAS.PLANOTORRE WHERE CodPry = @CodPry1"
+            )
+            .then(function (data) {
+              if (data.recordsets[0].length == 0) {
+                return res.status(404).json({
+                  ok: true,
+                  message: "No se obtuvieron resultados",
+                  dataList: data.recordsets[0],
+                  rowsAffected: data.rowsAffected,
+                });
+              } else {
+                resolve(data);
+              }
+              connection.close();
+            })
+            .catch(function (error) {
+              console.log(error);
+              return res.status(400).json({
+                ok: false,
+                message: "No se ha podido realizar la consulta con la BD",
+                error: error,
+              });
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+          return res.status(400).json({
+            ok: false,
+            message: "No se ha podido conectar con la BD 22",
+          });
+        });
+    });
+  }
+});
+
+
 app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
   //var { VE_Anio, //AÑO
   //  VE_Mes //MES
