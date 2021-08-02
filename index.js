@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //}, app);
 
 app.get("/", (req, res) => {
-  res.send("llllllllll");
+  res.send("prueba");
 });
 
 app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
