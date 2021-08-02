@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //}, app);
 
 app.get("/", (req, res) => {
-  res.send("Hello WORLD Argentica vs Colombia");
+  res.send("api marval s.a");
 });
 
 app.get("/api/sqlserver/JDEVTAS/month", (req, res) => {
