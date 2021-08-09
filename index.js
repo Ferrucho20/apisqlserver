@@ -483,7 +483,8 @@ app.post("/api/sqlserver/JDEVTAS/getPlano", (req, res) => {
           new mssql.Request(connection)
             .input("CodPry1", mssql.NChar, CodPry)
             .query(
-              "SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1"
+            //  "SELECT CodLot, EtqEst, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1"
+              "SELECT CodLot, EtqNomAse, EtqEst, EtqPrecBase, EtqPrecKits, EtqPrc, EtqAre, EtqVlm, EtqFev, EtqVlb, EtqNcl, EtqClr FROM JDEVTAS.PLANOBI WHERE CodPry = @CodPry1"
             )
             .then(function (data) {
               if (data.recordsets[0].length == 0) {
