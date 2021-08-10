@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //}, app);
 
 app.get("/", (req, res) => {
-  res.send("api marvall s.a");
+  res.send("1098724637");
 });
 
 app.post("/api/sqlserver/JDEVTAS/getTower", (req, res) => {
