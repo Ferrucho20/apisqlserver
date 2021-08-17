@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //}, app);
 
 app.get("/", (req, res) => {
-  res.send("2222222");
+  res.send("17/agosto/2021/4:42pm");
 });
 
 app.post("/api/sqlserver/JDEVTAS/getTower", (req, res) => {
