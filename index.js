@@ -81,7 +81,7 @@ app.post("/api/sqlserver/JDEVTAS/getTower", (req, res) => {
           new mssql.Request(connection)
             .input("CodPry1", mssql.NChar, CodPry)
             .query(
-              "SELECT CodTorre, CodPlan, DesPlan, TotMts2, TotVend, TodDisp, TotInmuebles FROM JDEVTAS.PLANOTORRE WHERE CodPry = @CodPry1"
+              "SELECT CodTorre, CodPlan, DesPlan, TotMts2, TotVend, TodDisp, TotInmuebles FROM JDEVTAS.PLANOTORRE WHERE CodPry = @CodPry1 order by CodTorre, CodPlan desc"
             )
             .then(function (data) {
               if (data.recordsets[0].length == 0) {
